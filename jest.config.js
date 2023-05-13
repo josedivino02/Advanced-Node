@@ -8,6 +8,6 @@ module.exports = {
   },
   roots: ['<rootDir>/src', '<rootDir>/tests'],
   transform: {
-    '\\.spec.ts$': 'ts-jest',
+    '\\.ts$': 'ts-jest',
   },
 };
