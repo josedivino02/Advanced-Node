@@ -9,19 +9,29 @@ export namespace LoadUserAccountRepository {
     email: string;
   };
 
-  export type Result = undefined;
+  export type Result =
+    | undefined
+    | {
+        id: string;
+        name?: string;
+      };
 }
 
-export interface CreateFacebookAccountRepository {
-  createFromFacebook: (
-    params: CreateFacebookAccountRepository.Params
-  ) => Promise<void>;
+export interface SaveFacebookAccountRepository {
+  saveWithFacebook: (
+    params: SaveFacebookAccountRepository.Params
+  ) => Promise<SaveFacebookAccountRepository.Result>;
 }
 
-export namespace CreateFacebookAccountRepository {
+export namespace SaveFacebookAccountRepository {
   export type Params = {
+    id?: string;
     email: string;
     name: string;
     facebookId: string;
+  };
+
+  export type Result = {
+    id: string;
   };
 }

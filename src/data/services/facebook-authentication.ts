@@ -1,28 +1,37 @@
-import { FacebookAuthentication } from '@/domain/features';
-import { LoadFacebookUserApi } from '../contracts/apis';
-import { AuthenticationError } from '@/domain/errors';
+import { LoadFacebookUserApi } from '@/data/contracts/apis';
+import { TokenGenerator } from '@/data/contracts/crypto';
 import {
-  CreateFacebookAccountRepository,
   LoadUserAccountRepository,
-} from '../contracts/repos';
+  SaveFacebookAccountRepository,
+} from '@/data/contracts/repos';
+import { AuthenticationError } from '@/domain/errors';
+import { FacebookAuthentication } from '@/domain/features';
+import { AccessToken, FacebookAccount } from '@/domain/models';
 
-export class FaceBookAuthenticationService {
+export class FacebookAuthenticationService implements FacebookAuthentication {
   constructor(
     private readonly facebookApi: LoadFacebookUserApi,
-    private readonly UserAccountRepo: LoadUserAccountRepository &
-      CreateFacebookAccountRepository
+    private readonly userAccountRepo: LoadUserAccountRepository &
+      SaveFacebookAccountRepository,
+    private readonly crypto: TokenGenerator
   ) {}
 
   async perform(
     params: FacebookAuthentication.Params
-  ): Promise<AuthenticationError> {
+  ): Promise<FacebookAuthentication.Result> {
     const fbData = await this.facebookApi.loadUser(params);
-
     if (fbData !== undefined) {
-      await this.UserAccountRepo.load({ email: fbData?.email });
-      await this.UserAccountRepo.createFromFacebook(fbData);
+      const accountData = await this.userAccountRepo.load({
+        email: fbData.email,
+      });
+      const fbAccount = new FacebookAccount(fbData, accountData);
+      const { id } = await this.userAccountRepo.saveWithFacebook(fbAccount);
+      const token = await this.crypto.generateToken({
+        key: id,
+        expirationInMs: AccessToken.expirationInMs,
+      });
+      return new AccessToken(token);
     }
-
     return new AuthenticationError();
   }
 }
