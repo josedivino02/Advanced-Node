@@ -2,6 +2,7 @@ import { RequiredFieldError } from '@/application/errors';
 import {
   HttpResponse,
   badRequest,
+  ok,
   serverError,
   unauthorized,
 } from '@/application/helpers';
@@ -27,12 +28,9 @@ export class FacebookLoginController {
       });
 
       if (accessToken instanceof AccessToken) {
-        return {
-          statusCode: 200,
-          data: {
-            accessToken: accessToken.value,
-          },
-        };
+        return ok({
+          accessToken: accessToken.value,
+        });
       } else {
         return unauthorized();
       }
