@@ -1,5 +1,5 @@
-import { HttpGetClient } from '@/infra/http';
 import { FacebookApi } from '@/infra/apis';
+import { HttpGetClient } from '@/infra/http';
 
 import { mock, MockProxy } from 'jest-mock-extended';
 
@@ -72,5 +72,12 @@ describe('FacebookApi', () => {
       name: 'any_fb_name',
       email: 'any_fb_email',
     });
+  });
+
+  it('should return undefined if HttpGetClient throws', async () => {
+    httpClient.get.mockReset().mockRejectedValueOnce(new Error('fb_error'));
+    const fbUser = await sut.loadUser({ token: 'any_client_token' });
+
+    expect(fbUser).toBeUndefined();
   });
 });
