@@ -15,8 +15,8 @@ export class PgUserAccountRepository
 {
   async load({ email }: LoadParams): Promise<LoadResult> {
     const pgUserRepo = getRepository(PgUser);
-
     const pgUser = await pgUserRepo.findOne({ email });
+
     if (pgUser !== undefined) {
       return {
         id: pgUser.id.toString(),
