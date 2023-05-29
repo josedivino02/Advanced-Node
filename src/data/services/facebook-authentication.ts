@@ -20,7 +20,6 @@ export class FacebookAuthenticationService implements FacebookAuthentication {
     token,
   }: FacebookAuthentication.Params): Promise<FacebookAuthentication.Result> {
     const fbData = await this.facebookApi.loadUser({ token });
-
     if (fbData !== undefined) {
       const accountData = await this.userAccountRepo.load({
         email: fbData.email,
