@@ -4,8 +4,8 @@ import {
   Validator,
   ValidationBuilder as builder,
 } from '@/application/validation';
+import { AccessToken } from '@/domain/entities';
 import { FacebookAuthentication } from '@/domain/features';
-import { AccessToken } from '@/domain/models';
 
 type HttpRequest = {
   token: string;
