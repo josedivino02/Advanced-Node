@@ -20,18 +20,20 @@ export class FacebookAuthenticationService implements FacebookAuthentication {
     token,
   }: FacebookAuthentication.Params): Promise<FacebookAuthentication.Result> {
     const fbData = await this.facebookApi.loadUser({ token });
-    if (fbData !== undefined) {
-      const accountData = await this.userAccountRepo.load({
-        email: fbData.email,
-      });
-      const fbAccount = new FacebookAccount(fbData, accountData);
-      const { id } = await this.userAccountRepo.saveWithFacebook(fbAccount);
-      const token = await this.crypto.generateToken({
-        key: id,
-        expirationInMs: AccessToken.expirationInMs,
-      });
-      return new AccessToken(token);
-    }
-    return new AuthenticationError();
+
+    if (fbData === undefined) return new AuthenticationError();
+
+    const accountData = await this.userAccountRepo.load({
+      email: fbData.email,
+    });
+
+    const fbAccount = new FacebookAccount(fbData, accountData);
+    const { id } = await this.userAccountRepo.saveWithFacebook(fbAccount);
+
+    const accessToken = await this.crypto.generateToken({
+      key: id,
+      expirationInMs: AccessToken.expirationInMs,
+    });
+    return new AccessToken(accessToken);
   }
 }
