@@ -5,9 +5,9 @@ import {
 import { PgUser } from '@/infra/postgres/entities';
 import { getRepository } from 'typeorm';
 
-type LoadParams = LoadUserAccountRepository.Params;
+type LoadParams = LoadUserAccountRepository.Input;
 type LoadResult = LoadUserAccountRepository.Result;
-type SaveParams = SaveFacebookAccountRepository.Params;
+type SaveParams = SaveFacebookAccountRepository.Input;
 type SaveResult = SaveFacebookAccountRepository.Result;
 
 export class PgUserAccountRepository
