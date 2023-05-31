@@ -24,6 +24,9 @@ describe('ExpressRouter', () => {
       statusCode: 200,
       data: { data: 'any_data' },
     });
+  });
+
+  beforeEach(() => {
     sut = adaptExpressRoute(controller);
   });
 
