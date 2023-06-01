@@ -1,11 +1,11 @@
 import { UUIDGenerator } from '@/domain/contracts/crypto';
 import { UploadFile } from '@/domain/contracts/gateways';
-import { SaveUserPicture } from '@/domain/contracts/repos';
+import { LoadUserProfile, SaveUserPicture } from '@/domain/contracts/repos';
 
 type Setup = (
   fileStorage: UploadFile,
   crypto: UUIDGenerator,
-  userProfileRepo: SaveUserPicture
+  userProfileRepo: SaveUserPicture & LoadUserProfile
 ) => ChangeProfilePicture;
 type Input = { id: string; file?: Buffer };
 export type ChangeProfilePicture = (input: Input) => Promise<void>;
@@ -21,4 +21,5 @@ export const setupChangeProfilePicture: Setup =
       });
     }
     await userProfileRepo.savePicture({ pictureUrl });
+    await userProfileRepo.load({ id });
   };
