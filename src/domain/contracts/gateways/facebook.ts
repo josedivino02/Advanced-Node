@@ -1,7 +1,5 @@
 export interface LoadFacebookUser {
-  loadUser: (
-    params: LoadFacebookUser.Input
-  ) => Promise<LoadFacebookUser.Output>;
+  loadUser: (input: LoadFacebookUser.Input) => Promise<LoadFacebookUser.Output>;
 }
 
 export namespace LoadFacebookUser {

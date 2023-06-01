@@ -1,5 +1,5 @@
 export interface LoadUserAccount {
-  load: (params: LoadUserAccount.Input) => Promise<LoadUserAccount.Result>;
+  load: (input: LoadUserAccount.Input) => Promise<LoadUserAccount.Result>;
 }
 
 export namespace LoadUserAccount {
@@ -17,7 +17,7 @@ export namespace LoadUserAccount {
 
 export interface SaveFacebookAccount {
   saveWithFacebook: (
-    params: SaveFacebookAccount.Input
+    input: SaveFacebookAccount.Input
   ) => Promise<SaveFacebookAccount.Result>;
 }
 
