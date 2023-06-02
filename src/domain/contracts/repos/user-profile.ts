@@ -13,5 +13,5 @@ export interface LoadUserProfile {
 export namespace LoadUserProfile {
   export type Input = { id: string };
 
-  export type OutPut = { name?: string };
+  export type OutPut = { name?: string } | undefined;
 }
