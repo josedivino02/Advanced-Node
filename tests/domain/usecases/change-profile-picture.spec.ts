@@ -1,12 +1,15 @@
-import { UUIDGenerator } from '@/domain/contracts/crypto';
-import { DeleteFile, UploadFile } from '@/domain/contracts/gateways';
+import {
+  DeleteFile,
+  UploadFile,
+  UUIDGenerator,
+} from '@/domain/contracts/gateways';
 import { LoadUserProfile, SaveUserPicture } from '@/domain/contracts/repos';
 import { UserProfile } from '@/domain/entities';
 import {
   ChangeProfilePicture,
   setupChangeProfilePicture,
 } from '@/domain/usecases';
-import { MockProxy, mock } from 'jest-mock-extended';
+import { mock, MockProxy } from 'jest-mock-extended';
 
 jest.mock('@/domain/entities/user-profile');
 

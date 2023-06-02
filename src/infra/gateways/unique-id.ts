@@ -1,4 +1,4 @@
-import { UUIDGenerator } from '@/domain/contracts/crypto';
+import { UUIDGenerator } from '@/domain/contracts/gateways';
 
 export class UniqueId implements UUIDGenerator {
   constructor(private readonly date: Date) {}

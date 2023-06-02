@@ -7,11 +7,11 @@ import request from 'supertest';
 import { getConnection } from 'typeorm';
 
 describe('Login Routes', () => {
-  describe('POST /login/facebook', () => {
+  describe('POST /login/facebook-api', () => {
     let backup: IBackup;
     const loadUserSpy = jest.fn();
 
-    jest.mock('@/infra/apis/facebook', () => ({
+    jest.mock('@/infra/gateways/facebook-api', () => ({
       FacebookApi: jest.fn().mockReturnValue({ loadUser: loadUserSpy }),
     }));
 
