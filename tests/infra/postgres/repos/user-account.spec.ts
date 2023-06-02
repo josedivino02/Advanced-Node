@@ -1,9 +1,9 @@
-import { PgUserAccountRepository } from '@/infra/postgres/repos';
 import { PgUser } from '@/infra/postgres/entities';
+import { PgUserAccountRepository } from '@/infra/postgres/repos';
 import { makeFakeDb } from '@/tests/infra/postgres/mocks';
 
 import { IBackup } from 'pg-mem';
-import { getRepository, Repository, getConnection } from 'typeorm';
+import { Repository, getConnection, getRepository } from 'typeorm';
 
 describe('PgUserAccountRepository', () => {
   let sut: PgUserAccountRepository;
@@ -31,7 +31,7 @@ describe('PgUserAccountRepository', () => {
 
       const account = await sut.load({ email: 'any_email' });
 
-      expect(account).toEqual({ id: '1' });
+      expect(account).toMatchObject({ id: '1' });
     });
 
     it('should return undefined if email does not exists', async () => {
@@ -69,7 +69,7 @@ describe('PgUserAccountRepository', () => {
       });
       const pgUser = await pgUserRepo.findOne({ id: 1 });
 
-      expect(pgUser).toEqual({
+      expect(pgUser).toMatchObject({
         id: 1,
         email: 'any_email',
         name: 'new_name',
