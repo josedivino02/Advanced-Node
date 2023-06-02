@@ -1,7 +1,7 @@
 import { RequiredFieldError } from '@/application/errors';
 import { Validator } from '@/application/validation';
 
-type TypeValue = string | Buffer;
+type TypeValue = string | Buffer | any;
 
 export class Required implements Validator {
   constructor(readonly value: TypeValue, readonly fieldName?: string) {}
