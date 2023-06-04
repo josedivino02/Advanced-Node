@@ -4,5 +4,10 @@ export const env = {
     clientSecret: process.env.FB_CLIENT_SECRET ?? '',
   },
   port: process.env.PORT ?? 8080,
-  jwtSecret: process.env.JWT_SECRET ?? '38cdxhnf30',
+  jwtSecret: process.env.JWT_SECRET ?? '',
+  s3: {
+    accessKey: process.env.AWS_S3_ACCESS_KEY ?? '',
+    secret: process.env.AWS_S3_SECRET ?? '',
+    bucket: process.env.AWS_S3_BUCKET ?? '',
+  },
 };
