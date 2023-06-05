@@ -3,13 +3,13 @@ import { Validator } from '@/application/validation';
 
 export class MaxFileSize implements Validator {
   constructor(
-    private readonly masSizeInMb: number,
+    private readonly maxSizeInMb: number,
     private readonly value: Buffer
   ) {}
 
   validate(): Error | undefined {
-    const maxFileSizeInBytes = 5 * 1024 * 1024;
+    const maxFileSizeInBytes = this.maxSizeInMb * 1024 * 1024;
     if (this.value.length > maxFileSizeInBytes)
-      return new MaxFileSizeError(this.masSizeInMb);
+      return new MaxFileSizeError(this.maxSizeInMb);
   }
 }
