@@ -4,3 +4,10 @@ export class ConnectionNotFoundError extends Error {
     this.name = 'ConnectionNotFoundError';
   }
 }
+
+export class TransactionNotFoundError extends Error {
+  constructor() {
+    super('No Transaction was found');
+    this.name = 'TransactionNotFoundError';
+  }
+}
