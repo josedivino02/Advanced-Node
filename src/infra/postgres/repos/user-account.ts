@@ -1,6 +1,6 @@
 import { LoadUserAccount, SaveFacebookAccount } from '@/domain/contracts/repos';
 import { PgUser } from '@/infra/postgres/entities';
-import { getRepository } from 'typeorm';
+import { PgRepository } from '@/infra/postgres/repos/repository';
 
 type LoadParams = LoadUserAccount.Input;
 type LoadResult = LoadUserAccount.Result;
@@ -8,10 +8,11 @@ type SaveParams = SaveFacebookAccount.Input;
 type SaveResult = SaveFacebookAccount.Result;
 
 export class PgUserAccountRepository
+  extends PgRepository
   implements LoadUserAccount, SaveFacebookAccount
 {
   async load({ email }: LoadParams): Promise<LoadResult> {
-    const pgUserRepo = getRepository(PgUser);
+    const pgUserRepo = this.getRepository(PgUser);
     const pgUser = await pgUserRepo.findOne({ email });
 
     if (pgUser !== undefined) {
@@ -28,7 +29,7 @@ export class PgUserAccountRepository
     name,
     id,
   }: SaveParams): Promise<SaveResult> {
-    const pgUserRepo = getRepository(PgUser);
+    const pgUserRepo = this.getRepository(PgUser);
     let resultId: string;
     if (id === undefined) {
       const pgUser = await pgUserRepo.save({

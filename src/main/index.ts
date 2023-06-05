@@ -1,9 +1,10 @@
 import './config/module-alias';
+import { PgConnection } from '@/infra/postgres/helpers';
 import { env } from '@/main/config/env';
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
 
-createConnection()
+PgConnection.getInstance()
+  .connect()
   .then(async () => {
     const { app } = await import('@/main/config/app');
     app.listen(env.port, () =>

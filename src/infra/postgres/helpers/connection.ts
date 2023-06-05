@@ -1,11 +1,11 @@
 import {
-  ObjectLiteral,
-  ObjectType,
+  getConnection,
+  createConnection,
+  getConnectionManager,
   QueryRunner,
   Repository,
-  createConnection,
-  getConnection,
-  getConnectionManager,
+  ObjectLiteral,
+  ObjectType,
 } from 'typeorm';
 import { ConnectionNotFoundError } from './errors';
 
