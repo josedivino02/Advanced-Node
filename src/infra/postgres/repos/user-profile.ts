@@ -17,6 +17,6 @@ export class PgUserProfileRepository
   async load({ id }: LoadUserProfile.Input): Promise<LoadUserProfile.OutPut> {
     const pgUserRepo = getRepository(PgUser);
     const pgUser = await pgUserRepo.findOne({ id: parseInt(id) });
-    if (pgUser !== undefined) return { name: pgUser.name };
+    if (pgUser !== undefined) return { name: pgUser.name ?? undefined };
   }
 }
