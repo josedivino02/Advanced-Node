@@ -7,7 +7,7 @@ import {
 import { ChangeProfilePicture } from '@/domain/usecases';
 
 type HttpRequest = {
-  file: { buffer: Buffer; mimeType: string };
+  file?: { buffer: Buffer; mimeType: string };
   userId: string;
 };
 type Model = Error | { initials?: string; pictureUrl?: string };
@@ -21,14 +21,15 @@ export class SavePictureController extends Controller {
     file,
     userId,
   }: HttpRequest): Promise<HttpResponse<Model>> {
-    const data = await this.changeProfilePicture({
+    const { initials, pictureUrl } = await this.changeProfilePicture({
       id: userId,
       file,
     });
-    return ok(data);
+    return ok({ initials, pictureUrl });
   }
 
   override buildValidators({ file }: HttpRequest): Validator[] {
+    if (file === undefined) return [];
     return [
       ...Builder.of({ value: file, fieldName: 'file' })
         .required()
